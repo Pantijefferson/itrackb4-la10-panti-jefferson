@@ -13,7 +13,7 @@
         </a>
     </div>
 
-    <!-- Success Message Alert (lalabas kapag nakapag-add ng bagong comic) -->
+    <!-- Success Message Alert -->
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
             {{ session('success') }}
@@ -39,14 +39,10 @@
                class="btn {{ $genre === 'all' ? 'btn-primary' : 'btn-outline-primary' }}">All</a>
             <a href="{{ route('comics.index', ['genre' => 'Adventure', 'year' => $year]) }}"
                class="btn {{ $genre === 'Adventure' ? 'btn-primary' : 'btn-outline-primary' }}">Adventure</a>
-            <a href="{{ route('comics.index', ['genre' => 'Dark Fantasy', 'year' => $year]) }}"
-               class="btn {{ $genre === 'Dark Fantasy' ? 'btn-primary' : 'btn-outline-primary' }}">Dark Fantasy</a>
+            <a href="{{ route('comics.index', ['genre' => 'Supernatural', 'year' => $year]) }}"
+               class="btn {{ $genre === 'Supernatural' ? 'btn-primary' : 'btn-outline-primary' }}">Supernatural</a>
             <a href="{{ route('comics.index', ['genre' => 'Action', 'year' => $year]) }}"
                class="btn {{ $genre === 'Action' ? 'btn-primary' : 'btn-outline-primary' }}">Action</a>
-            <a href="{{ route('comics.index', ['genre' => 'Psychological', 'year' => $year]) }}"
-               class="btn {{ $genre === 'Psychological' ? 'btn-primary' : 'btn-outline-primary' }}">Psychological</a>
-            <a href="{{ route('comics.index', ['genre' => 'Comedy', 'year' => $year]) }}"
-               class="btn {{ $genre === 'Comedy' ? 'btn-primary' : 'btn-outline-primary' }}">Comedy</a>
         </div>
     </div>
 
@@ -56,18 +52,18 @@
         <div class="btn-group btn-group-sm" role="group">
             <a href="{{ route('comics.index', ['genre' => $genre, 'year' => 'all']) }}"
                class="btn {{ $year === 'all' ? 'btn-primary' : 'btn-outline-primary' }}">All</a>
-            <a href="{{ route('comics.index', ['genre' => $genre, 'year' => '1997']) }}"
-               class="btn {{ $year === '1997' ? 'btn-primary' : 'btn-outline-primary' }}">1997</a>
-            <a href="{{ route('comics.index', ['genre' => $genre, 'year' => '1999']) }}"
-               class="btn {{ $year === '1999' ? 'btn-primary' : 'btn-outline-primary' }}">1999</a>
-            <a href="{{ route('comics.index', ['genre' => $genre, 'year' => '2003']) }}"
-               class="btn {{ $year === '2003' ? 'btn-primary' : 'btn-outline-primary' }}">2003</a>
-            <a href="{{ route('comics.index', ['genre' => $genre, 'year' => '2009']) }}"
-               class="btn {{ $year === '2009' ? 'btn-primary' : 'btn-outline-primary' }}">2009</a>
+            <a href="{{ route('comics.index', ['genre' => $genre, 'year' => '2001']) }}"
+               class="btn {{ $year === '2001' ? 'btn-primary' : 'btn-outline-primary' }}">2001</a>
+            <a href="{{ route('comics.index', ['genre' => $genre, 'year' => '2014']) }}"
+               class="btn {{ $year === '2014' ? 'btn-primary' : 'btn-outline-primary' }}">2014</a>
+            <a href="{{ route('comics.index', ['genre' => $genre, 'year' => '2016']) }}"
+               class="btn {{ $year === '2016' ? 'btn-primary' : 'btn-outline-primary' }}">2016</a>
+            <a href="{{ route('comics.index', ['genre' => $genre, 'year' => '2017']) }}"
+               class="btn {{ $year === '2017' ? 'btn-primary' : 'btn-outline-primary' }}">2017</a>
             <a href="{{ route('comics.index', ['genre' => $genre, 'year' => '2018']) }}"
                class="btn {{ $year === '2018' ? 'btn-primary' : 'btn-outline-primary' }}">2018</a>
-            <a href="{{ route('comics.index', ['genre' => $genre, 'year' => '2019']) }}"
-               class="btn {{ $year === '2019' ? 'btn-primary' : 'btn-outline-primary' }}">2019</a>
+            <a href="{{ route('comics.index', ['genre' => $genre, 'year' => '2020']) }}"
+               class="btn {{ $year === '2020' ? 'btn-primary' : 'btn-outline-primary' }}">2020</a>
         </div>
     </div>
 
@@ -86,29 +82,29 @@
             @forelse ($comics as $comic)
                 <tr>
                     <td>
-                        <a href="{{ route('comics.show', ['comic' => $comic['id']]) }}">
+                        <a href="{{ route('comics.show', ['comic' => $comic->id]) }}">
                             {{ $loop->iteration }}
                         </a>
                     </td>
-                    <td>{{ $comic['title'] }}</td>
-                    <td>{{ $comic['author'] }}</td>
+                    <td>{{ $comic->title }}</td>
+                    <td>{{ $comic->author }}</td>
                     <td>
-                        {{ $comic['year'] }}
-                        @if ($comic['year'] >= 2015)
+                        {{ $comic->year }}
+                        @if ($comic->year >= 2015)
                             <span class="badge bg-primary">Modern</span>
                         @else
                             <span class="badge bg-primary">Classic</span>
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('comics.index', ['genre' => $comic['genre'], 'year' => $year]) }}">
-                            {{ $comic['genre'] }}
+                        <a href="{{ route('comics.index', ['genre' => $comic->genre, 'year' => $year]) }}">
+                            {{ $comic->genre }}
                         </a>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5">No Comics Available</td>
+                    <td colspan="5" class="text-center">No Comics Available</td>
                 </tr>
             @endforelse
         </tbody>
