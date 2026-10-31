@@ -2,75 +2,63 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Comic;
+use App\Models\Genre;
+use Illuminate\Database\Seeder;
 
 class ComicSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $comics = [
-            [
-                'title' => 'One Piece',
-                'author' => 'Eiichiro Oda',
-                'year' => 1997,
-                'genre' => 'Adventure',
-                'is_completed' => false,
-                'description' => 'A young pirate captain sets out with his crew to find the ultimate treasure known as the One Piece.',
-            ],
-            [
-                'title' => 'Naruto',
-                'author' => 'Masashi Kishimoto',
-                'year' => 1999,
-                'genre' => 'Action',
-                'is_completed' => true,
-                'description' => 'A young ninja seeks recognition from his peers and dreams of becoming the Hokage.',
-            ],
-            [
-                'title' => 'Death Note',
-                'author' => 'Tsugumi Ohba',
-                'year' => 2003,
-                'genre' => 'Psychological',
-                'is_completed' => true,
-                'description' => 'A high school student discovers a supernatural notebook that kills anyone whose name is written in it.',
-            ],
-            [
-                'title' => 'Attack on Titan',
-                'author' => 'Hajime Isayama',
-                'year' => 2009,
-                'genre' => 'Dark Fantasy',
-                'is_completed' => true,
-                'description' => 'Humanity lives inside cities surrounded by enormous walls to protect themselves from giant humanoid creatures.',
-            ],
-            [
-                'title' => 'Chainsaw Man',
-                'author' => 'Tatsuki Fujimoto',
-                'year' => 2018,
-                'genre' => 'Action',
-                'is_completed' => false,
-                'description' => 'A young man living in poverty merges with his pet chainsaw devil to survive in a dangerous world.',
-            ],
-            [
-                'title' => 'Spy x Family',
-                'author' => 'Tatsuya Endo',
-                'year' => 2019,
-                'genre' => 'Comedy',
-                'is_completed' => false,
-                'description' => null, 
-            ],
-        ];
+        // 1. Lookup rows FIRST, each held in a variable (Part D Requirement)
+        $a = Genre::create(['name' => 'Action']);
+        $b = Genre::create(['name' => 'Sci-Fi']);
+        $c = Genre::create(['name' => 'Adventure']);
 
-        foreach ($comics as $comic) {
-            Comic::create($comic);
-        }
+        // 2. Comics, each pointing at a real genre id via variables
+        Comic::create([
+            'title'       => 'Spider-Man: Blue',
+            'author'      => 'Jeph Loeb',
+            'year'        => 2002,
+            'price'       => 19.99,
+            'genre_id'    => $a->id,      // Action
+            'is_featured' => true,
+        ]);
 
-        foreach ($comics as $comic) {
-            Comic::create($comic);
-        }
+        Comic::create([
+            'title'       => 'Watchmen',
+            'author'      => 'Alan Moore',
+            'year'        => 1986,
+            'price'       => 24.99,
+            'genre_id'    => $b->id,      // Sci-Fi
+            'is_featured' => false,
+        ]);
+
+        Comic::create([
+            'title'       => 'Saga',
+            'author'      => 'Brian K. Vaughan',
+            'year'        => 2012,
+            'price'       => 14.99,
+            'genre_id'    => $b->id,      // Sci-Fi
+            'is_featured' => false,
+        ]);
+
+        Comic::create([
+            'title'       => 'One Piece Vol. 1',
+            'author'      => 'Eiichiro Oda',
+            'year'        => 1997,
+            'price'       => 9.99,
+            'genre_id'    => $c->id,      // Adventure
+            'is_featured' => false,
+        ]);
+
+        Comic::create([
+            'title'       => 'Batman: Year One',
+            'author'      => 'Frank Miller',
+            'year'        => 1987,
+            'price'       => 16.99,
+            'genre_id'    => $a->id,      // Action
+            'is_featured' => false,
+        ]);
     }
-    }
-
+}

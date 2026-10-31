@@ -1,61 +1,74 @@
 @extends('layouts.app')
 
+@section('title', 'Create Comic')
+
 @section('content')
-<div class="container mt-4">
-    <h2>Add New Comic</h2>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title mb-3">Add New Comic</h3>
 
-    <form action="{{ route('comics.store') }}" method="POST">
-        @csrf
+            <form method="POST" action="{{ route('comics.store') }}">
+                @csrf
 
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" name="title" id="title"
-                class="form-control" value="{{ old('title') }}" required>
-            @error('title')
-                <div class="text-danger mt-1 small">{{ $message }}</div>
-            @enderror
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}">
+                    @error('title')
+                        <div class="text-danger mt-1 small">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="author" class="form-label">Author</label>
+                    <input type="text" name="author" id="author" class="form-control" value="{{ old('author') }}">
+                    @error('author')
+                        <div class="text-danger mt-1 small">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year</label>
+                    <input type="number" name="year" id="year" class="form-control" value="{{ old('year') }}" placeholder="e.g. 2020">
+                    @error('year')
+                        <div class="text-danger mt-1 small">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="genre_id" class="form-label">Genre</label>
+                    <select name="genre_id" id="genre_id" class="form-select">
+                        <option value="">Choose a genre</option>
+                        @foreach ($genres as $genre)
+                            <option value="{{ $genre->id }}"
+                                @selected(old('genre_id') == $genre->id)
+                            >{{ $genre->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('genre_id')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" name="price" id="price" class="form-control" value="{{ old('price') }}" placeholder="e.g. 19.99">
+                    @error('price')
+                        <div class="text-danger mt-1 small">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" name="is_featured" id="is_featured" class="form-check-input" value="1" @checked(old('is_featured'))>
+                    <label for="is_featured" class="form-check-label">Featured Comic</label>
+                    @error('is_featured')
+                        <div class="text-danger mt-1 small">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Comic</button>
+                <a href="{{ route('comics.index') }}" class="btn btn-secondary">Cancel</a>
+
+            </form>
         </div>
-
-        <div class="mb-3">
-            <label for="author" class="form-label">Author</label>
-            <input type="text" name="author" id="author"
-                class="form-control" value="{{ old('author') }}" required>
-            @error('author')
-                <div class="text-danger mt-1 small">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="genre" class="form-label">Genre</label>
-            <input type="text" name="genre" id="genre"
-                class="form-control" value="{{ old('genre') }}" required>
-            @error('genre')
-                <div class="text-danger mt-1 small">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="year" class="form-label">Release Year</label>
-            <input type="number" name="year" id="year"
-                class="form-control" value="{{ old('year') }}" placeholder="e.g. 2019" required>
-            @error('year')
-                <div class="text-danger mt-1 small">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3 form-check">
-            <input type="checkbox" name="is_complete" id="is_complete"
-                class="form-check-input" value="1" {{ old('is_complete') ? 'checked' : '' }}>
-            <label for="is_complete" class="form-check-label">Is Completed?</label>
-        </div>
-
-        <button type="submit" class="btn btn-primary">
-            Save Comic
-        </button>
-
-        <a href="{{ route('comics.index') }}" class="btn btn-secondary">
-            Cancel
-        </a>
-    </form>
-</div>
+    </div>
 @endsection
